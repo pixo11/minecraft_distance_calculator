@@ -462,8 +462,8 @@ No. Distances only use X and Z.
 **Why is The End different?**
 It is a separate world that lines up with no other dimension, so a distance between it and another dimension means nothing. You enter through an End portal in a stronghold and return through the exit portal. Two places that are both in The End are measured normally.
 
-**Does it work on Mac or Linux?**
-`build.bat` is a Windows script, so the `.exe` is for Windows.
+**Does it work on Mac, Linux, Android, iPhone or a console?**
+No. It is for **Windows 10 or 11** only. `build.bat` is a Windows script and it makes a Windows `.exe`, which will not run on Mac, Linux, Chromebook, Android, iPhone, iPad or a game console. You can play Minecraft on those, but you need a Windows computer to use the calculator. Running it through a virtual machine or Wine might work, but it is untested and not supported.
 
 **How do I find my world's spawn?**
 A compass points at the world spawn in the Overworld. With cheats on, `/setworldspawn` while you stand somewhere sets spawn to that spot, which gives you exact numbers. Until then, 0, 0 is a good guess.
