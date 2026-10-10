@@ -18,7 +18,7 @@ No account, no Excel, no internet connection and no Minecraft mods needed.
 8. [The map](#the-map)
 9. [Dimensions: Overworld, Nether and The End](#dimensions-overworld-nether-and-the-end)
 10. [Travel methods and speeds](#travel-methods-and-speeds)
-11. [World seed box](#world-seed-box)
+11. [Worlds, seeds and finders](#worlds-seeds-and-finders)
 12. [The built-in guide](#the-built-in-guide)
 13. [How it works (the math)](#how-it-works-the-math)
 14. [How the conversion works](#how-the-conversion-works)
@@ -32,7 +32,7 @@ No account, no Excel, no internet connection and no Minecraft mods needed.
 ## Read this first: you must convert it
 
 > **The calculator only works after you convert it into an .exe.**
-> Opening the `.html` file directly, or running `app.py` on its own, is **not** the way to use this tool and it will **not** work properly.
+> If you open the `.html` file in a web browser, the calculator **locks itself** and only shows a "Please use the .exe version" message. It only unlocks inside the app that `build.bat` creates.
 > You have to run **`build.bat`** first. It does the conversion for you, and it only takes a few minutes. After that, you use the `.exe` it creates.
 
 You only need to convert **once**. After that you can open the `.exe` whenever you want.
@@ -60,6 +60,18 @@ Keep all three **together in the same folder**. Moving only one of them will bre
 
 ---
 
+## Before you start: install Python (one time)
+
+`build.bat` uses **Python** to create the app, so Python must be installed on your computer.
+
+1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest Python 3 for Windows.
+2. Run the installer and **tick "Add python.exe to PATH"** on the first screen, then click **Install Now**.
+3. You also need an **internet connection while converting** (it downloads two small helper packages). You do not need internet afterwards.
+
+Already have Python? Open a Command Prompt, type `python --version` and press Enter. If it prints a version number, you are ready.
+
+---
+
 ## Convert it to an .exe (step by step)
 
 ### 1. Open the folder
@@ -81,13 +93,20 @@ You can read `build.bat` and `app.py` in any text editor (Notepad is fine) befor
 
 ### 4. Wait for the black window to finish
 
-A black window (Command Prompt) opens and text scrolls by. **Do not close it yet** and do not click inside it. Be patient, it can take a few minutes, and it may look like nothing is happening for a while. That is normal.
+A black window (Command Prompt) opens and text scrolls by. It is creating a clean workspace, downloading the helper packages and packing everything into one file. **Do not close it yet** and do not click inside it. Be patient, it can take a few minutes, and it may look like nothing is happening for a while. That is normal.
 
 ### 5. When it says **Done**, close the window
 
-When the word **Done** appears, the conversion has finished. **Close the black window** and you are finished converting.
+When you see this, the conversion has finished:
 
-> If the window closes by itself, or never says Done, see [Troubleshooting](#troubleshooting).
+```
+Done. Your exe is in the "dist" folder.
+Press any key to continue . . .
+```
+
+**Close the black window** (click the X, or press any key) and you are finished converting.
+
+> The word **Done** is printed at the end even if something went wrong earlier. If you see red error text above it, or there is no `dist` folder, see [Troubleshooting](#troubleshooting).
 
 ---
 
@@ -100,15 +119,18 @@ your-folder\
 ├── minecraft_distance_calculator.html
 ├── app.py
 ├── build.bat
+├── MinecraftDistanceCalculator.spec
+├── build\
+├── venv\
 └── dist\
-    └── minecraft_distance_calculator.exe   <-- this is the one
+    └── MinecraftDistanceCalculator.exe   <-- this is the one
 ```
 
-Open the `dist` folder and double-click the `.exe`.
+Open the `dist` folder and double-click **`MinecraftDistanceCalculator.exe`**.
 
 **Tip:** Right-click the `.exe` and choose **Send to > Desktop (create shortcut)** so you can open it from your desktop. You can also move the `.exe` anywhere you like, because everything it needs is inside it.
 
-The other folders that appear (for example `build`) are leftovers from the conversion. They are safe to delete once you have your `.exe`.
+The other items (`build`, `venv` and the `.spec` file) are leftovers from the conversion. They are safe to delete once you have your `.exe`.
 
 ---
 
@@ -116,7 +138,9 @@ The other folders that appear (for example `build`) are leftovers from the conve
 
 1. Double-click the `.exe`.
 2. If Windows shows **"Windows protected your PC"**, click **More info**, then **Run anyway**. This appears because the program was made on your own computer and is not signed by a big publisher. It is safe, and you built it yourself from the files in this repository.
-3. The calculator opens in its own window.
+3. The calculator opens in its own window (no browser needed).
+
+The app needs the **Microsoft Edge WebView2 Runtime**, which comes with Windows 11 and with up-to-date Windows 10. If the window stays blank or does not open, install it from [Microsoft's WebView2 page](https://developer.microsoft.com/microsoft-edge/webview2/) (choose the **Evergreen Bootstrapper**).
 
 ---
 
@@ -250,15 +274,32 @@ Speeds come from the Minecraft Wiki (flat ground, no Speed or Slowness effects).
 
 ---
 
-## World seed box
+## Worlds, seeds and finders
 
-There is an optional **World seed** box. It is saved on your computer for future features. **It is not used in any calculation yet**, so leaving it empty changes nothing.
+At the top of the calculator there is a **World** box. Each world keeps its own spawn, waypoints, seed and edition, so you can play on several Minecraft worlds without mixing them up. Use **+ New world** to add one, the drop-down to switch, and **Delete** to remove one. Everything is saved on your computer.
+
+If you type your **world seed** (and pick your **Edition**), two extra tools appear on the map:
+
+- **Slime chunks**: tick the box and slime chunks are drawn in green. Hover the map to see if a chunk is a slime chunk.
+- **Strongholds**: shows the 3 strongholds closest to you, with distance, direction and walking time. Each has a **Show** button (centers the map on it) and a **+ Waypoint** button.
+
+**Editions:**
+
+| Edition | Slime chunks | Strongholds |
+|---|---|---|
+| Java 1.19.3 or newer | Exact | All 128 positions, exact before the game adjusts them |
+| Java 1.9 to 1.19.2 | Exact | Only stronghold 1 is exact. Strongholds 2 and 3 are shown as a direction and a distance range |
+| Bedrock | Not supported (Bedrock slime chunks do not depend on the seed) | Not supported |
+
+**Accuracy:** I checked the slime chunk and stronghold math against the reference library *cubiomes* on several seeds. The game moves each stronghold to a fitting biome, so the real one can be up to about **112 blocks** away from its dot. Get close, then throw an eye of ender. This has not been compared with a real Minecraft world yet, so treat the dots as very good estimates.
+
+Leaving the seed empty changes nothing: the calculator works as before.
 
 ---
 
 ## The built-in guide
 
-The **How to use** tab is a full animated tutorial with 13 sections:
+The **How to use** tab is a full animated tutorial with 14 sections:
 
 1. Quick start
 2. How coordinates work
@@ -268,11 +309,12 @@ The **How to use** tab is a full animated tutorial with 13 sections:
 6. The 8 to 1 Nether scale
 7. Crossing dimensions
 8. The map
-9. Every number explained
-10. Accuracy and limits
-11. Questions and fixes
-12. Test yourself (a short quiz)
-13. Cheat sheet
+9. Worlds, seeds and finders
+10. Every number explained
+11. Accuracy and limits
+12. Questions and fixes
+13. Test yourself (a short quiz)
+14. Cheat sheet
 
 Press **Load a ready-made example** at the top of the guide to fill the calculator with sample data and see how everything looks.
 
@@ -341,9 +383,13 @@ The place is converted into **your** dimension first, and then the normal distan
 
 ## How the conversion works
 
-The calculator itself is a single web page (`minecraft_distance_calculator.html`). It contains all of its own code and needs no internet. `app.py` is a small launcher that opens that page in its own window. `build.bat` packages the launcher and the page together into one `.exe` so you can run it like any normal Windows program, without installing anything else afterwards.
+The calculator itself is a single web page (`minecraft_distance_calculator.html`). It contains all of its own code and needs no internet.
 
-That is why you run `build.bat` once, and why the `.html` file on its own is not the supported way to use the tool.
+- **`app.py`** is a small launcher. It uses [pywebview](https://pywebview.flowrl.com/) to open the page in its own window and keeps your entries between launches.
+- **`build.bat`** creates a clean Python environment (`venv`), installs `pywebview` and `PyInstaller`, and then uses PyInstaller to pack the launcher and the page into one `MinecraftDistanceCalculator.exe`. It is a windowed app, so no black console window appears when you run it.
+- The page itself checks that it is running inside the app window. In a normal browser it shows "Please use the .exe version" instead of the calculator.
+
+That is why you run `build.bat` once, and why the `.html` file on its own does not work.
 
 ---
 
@@ -355,12 +401,23 @@ That is why you run `build.bat` once, and why the `.html` file on its own is not
 | `app.py` | The launcher that opens the calculator in a window. |
 | `build.bat` | The converter. Double-click it to create the `.exe`. |
 
+Created by `build.bat`: `venv\` (temporary workspace), `build\` (temporary files), `MinecraftDistanceCalculator.spec` (PyInstaller settings) and `dist\MinecraftDistanceCalculator.exe` (your app).
+
 ---
 
 ## Troubleshooting
 
-**The black window closes immediately, or never says Done.**
-Make sure you **extracted** the zip first and that `build.bat`, `app.py` and the `.html` file are in the **same folder**. Then run `build.bat` again. If you still see an error, take a screenshot of the black window before it closes (or run `build.bat` from a Command Prompt so it stays open) and open an issue with the screenshot.
+**It says "python is not recognized" (or similar).**
+Python is not installed, or it was installed without **"Add python.exe to PATH"**. Install it again from [python.org](https://www.python.org/downloads/) and tick that box, then run `build.bat` again.
+
+**There are red errors, or there is no `dist` folder after Done.**
+Make sure you **extracted** the zip first and that `build.bat`, `app.py` and the `.html` file are in the **same folder**. Check that you are online, then run `build.bat` again. If it still fails, take a screenshot of the black window and open an issue with it.
+
+**I opened the .html and it says "Please use the .exe version".**
+That is intended. Follow the steps above to convert it and use the `.exe`.
+
+**The app window is blank or does not open.**
+Install the Microsoft Edge WebView2 Runtime (see [Opening the app](#opening-the-app)).
 
 **Windows says "Windows protected your PC".**
 Click **More info**, then **Run anyway**. This happens with any program that is not signed by a large publisher.
@@ -369,10 +426,10 @@ Click **More info**, then **Run anyway**. This happens with any program that is 
 Click **Run**.
 
 **My antivirus flags the `.exe`.**
-Programs packaged this way are sometimes flagged by mistake. You built it yourself from the files in this repository, which you can read in any text editor. If you are unsure, you can add the folder to your antivirus exceptions.
+Programs packaged with PyInstaller are sometimes flagged by mistake. You built it yourself from the files in this repository, which you can read in any text editor. If you are unsure, you can add the folder to your antivirus exceptions.
 
 **I can't find the `.exe`.**
-Look in the **`dist`** folder next to `build.bat`. See [Where is my .exe?](#where-is-my-exe).
+Look in the **`dist`** folder next to `build.bat`, for the file named `MinecraftDistanceCalculator.exe`. See [Where is my .exe?](#where-is-my-exe).
 
 **The numbers show dashes.**
 A value is missing. Type both **Your X** and **Your Z** for the dimension you are in, and both **X** and **Z** on the waypoint.
@@ -381,17 +438,17 @@ A value is missing. Type both **Your X** and **Your Z** for the dimension you ar
 Press the button for the new dimension and type the coordinates the game shows there.
 
 **My entries disappeared.**
-Entries are remembered on the computer when possible. The **Reset everything** button clears them on purpose.
+Entries are saved on your computer in `%APPDATA%\MinecraftDistanceCalculator`. The **Reset everything** button clears them on purpose, and deleting that folder does too.
 
 **I want to build it again.**
-Delete the `dist` and `build` folders and run `build.bat` again.
+Just run `build.bat` again. It replaces the old `venv` automatically. You can delete the `dist` and `build` folders first if you want a fresh start.
 
 ---
 
 ## FAQ
 
 **Do I need to install anything to use the `.exe`?**
-No. Once it is converted, the `.exe` runs on its own.
+Only to convert it: Python, once. After that the `.exe` runs on its own (on Windows 10 or 11 with WebView2).
 
 **Do I need internet?**
 No, the app works offline.
@@ -415,7 +472,7 @@ A compass points at the world spawn in the Overworld. With cheats on, `/setworld
 
 ## Privacy
 
-Nothing you type is sent anywhere. The calculator runs entirely on your computer and works without an internet connection.
+Nothing you type is sent anywhere. The calculator runs entirely on your computer and works without an internet connection (internet is only needed once, while `build.bat` downloads its helper packages). Your entries are saved in `%APPDATA%\MinecraftDistanceCalculator` on your own computer.
 
 ---
 
