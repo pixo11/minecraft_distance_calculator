@@ -148,6 +148,10 @@ The app needs the **Microsoft Edge WebView2 Runtime**, which comes with Windows 
 
 The app has two pages, selected with the tabs at the top: **Calculator** and **How to use**.
 
+On the Calculator page, the left side has **1 · Where are you?** and the **Closest** panel, and stays in view while you scroll. The right side has the **World** bar, **2 · Map** and **3 · Your places**. On a narrow window everything stacks in one column. Text, buttons and boxes are large on purpose so they are easy to read and click. If it still feels small on your screen, try zooming the whole app with **Ctrl and +** (and **Ctrl and 0** to reset); this should work, but it depends on your Windows setup.
+
+**Light and dark mode:** the app follows your Windows setting automatically (Settings, Personalization, Colors, "Choose your mode"). Each of the three colour themes (Overworld green, Nether red, End purple) has a light and a dark version. If you change the Windows setting while the app is open, it switches by itself.
+
 ### Step 1: find your coordinates in Minecraft
 
 - **Java Edition:** press **F3** and read the line that starts with **XYZ**.
@@ -157,7 +161,7 @@ You get three numbers: X, Y and Z. You only need **X** (first) and **Z** (third)
 
 ### Step 2: tell the calculator where you are
 
-1. Under **Your position**, press the button for the dimension you are standing in: **Overworld**, **Nether** or **The End**.
+1. Under **1 · Where are you?**, press the button for the dimension you are standing in: **Overworld**, **Nether** or **The End**.
 2. Type your **X** and **Z**.
 
 The calculator remembers a separate position for each dimension, so when you switch dimension and come back, the old numbers are still there.
@@ -172,17 +176,19 @@ Every place is a **waypoint**. Each one has:
 | **Dimension** | The dimension where that place is |
 | **X** and **Z** | The coordinates exactly as the game shows them in that dimension |
 
-Press **+ Add waypoint** to add more, and the **x** button to remove one. A **Spawn** waypoint at 0, 0 is added for you. The real world spawn is usually close to 0, 0 but not always, so change it if yours is different.
+Press **+ Add waypoint** (under **3 · Your places**) to add more, and the **x** button to remove one. A **Spawn** waypoint at 0, 0 is added for you. The real world spawn is usually close to 0, 0 but not always, so change it if yours is different.
 
 > **Important:** always type coordinates exactly as the game shows them in the dimension where the place is. **Never convert Nether coordinates yourself.** The calculator multiplies and divides for you.
 
 ### Step 4: read the results
 
-Every waypoint card updates instantly as you type. The card with the **Closest** badge is the nearest place in your dimension, and the **Closest** panel at the top names it.
+Every waypoint card updates instantly as you type. The card with the **Closest** badge is the nearest place in your dimension, and the **Closest** panel on the left names it.
 
 ---
 
 ## Reading a waypoint card
+
+Each card shows the most useful answers first: the big distance, **Head toward**, **Walking**, **Sprinting** and the two Nether boxes. Click **More details** on a card, or **Show all details** above the list, to also see **Chunks**, **Bearing**, the extra travel method and the other-dimension spot. The app remembers your choice.
 
 | Item | What it means |
 | --- | --- |
@@ -203,7 +209,7 @@ If something shows a dash (-), a number is missing. Check that you typed both yo
 
 ## The map
 
-Under the position panel there is a live top-down **map**. **North is up and East is right.**
+Above the places list there is a live top-down **map**. **North is up and East is right.**
 
 | What you see | Meaning |
 | --- | --- |
@@ -224,6 +230,8 @@ Controls:
 - **Fit all** zooms to show everything. **Center on me** centers on your dot.
 - Keyboard (click the map first): arrow keys move, **+** and **-** zoom, **0** fits everything.
 - Untick **Show places from the other dimension** to hide the dashed dots.
+
+The **Travel options** section on the left holds the extra travel method and the walking and sprinting speeds. The seed and edition are under **World name, seed and edition** in the World bar.
 
 Until you move or zoom the map yourself, it re-fits automatically whenever you add or change something.
 
@@ -276,9 +284,9 @@ Speeds come from the Minecraft Wiki (flat ground, no Speed or Slowness effects).
 
 ## Worlds, seeds and finders
 
-At the top of the calculator there is a **World** box. Each world keeps its own spawn, waypoints, seed and edition, so you can play on several Minecraft worlds without mixing them up. Use **+ New world** to add one, the drop-down to switch, and **Delete** to remove one. Everything is saved on your computer.
+Above the map there is a **World** bar. Each world keeps its own spawn, waypoints, seed and edition, so you can play on several Minecraft worlds without mixing them up. Use **+ New world** to add one, the drop-down to switch, and **Delete** to remove one. Everything is saved on your computer.
 
-If you type your **world seed** (and pick your **Edition**), two extra tools appear on the map:
+Open **World name, seed and edition** in that bar to type your **world seed** and pick your **Edition**. Then two extra tools appear on the map:
 
 - **Slime chunks**: tick the box and slime chunks are drawn in green. Hover the map to see if a chunk is a slime chunk.
 - **Strongholds**: shows the 3 strongholds closest to you, with distance, direction and walking time. Each has a **Show** button (centers the map on it) and a **+ Waypoint** button.
